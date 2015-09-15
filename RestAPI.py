@@ -1,28 +1,28 @@
 from twisted.web.server import Site
 from twisted.web.resource import Resource
 from twisted.internet import reactor
-from twisted.web.resource import NoResource
 
-from calendar import calendar
+import cgi
 
-class Calendar(Resource):
-    def getChild(self, path, request):
-        try:
-            year = int(path)
-        except ValueError:
-            return NoResource()
-        else:
-            return YearPage(year)
+class FormPage(Resource):
+    def render_GET(self,request):
+        return """
+        <html>
+            <body>
+                <form method="POST">
+                    <input name="the-field" type="text" />
+                </form>
+            </body>
+        </html>"""
+    def render_POST(self, request):
+        return """
+        <html>
+            <body>You submitted: %s</body>
+        </html>
+        """ % (cgi.escape(request.args["the-field"][0]),)
 
-class YearPage(Resource):
-    def __init__(self, year):
-        Resource.__init__(self)
-        self.year = year
-
-    def render_GET(self, request):
-        return "<html><body><pre>%s</pre></body></html>" % (calendar(self.year),)
-
-root = Calendar
+root = Resource()
+root.putChild("form", FormPage())
 factory = Site(root)
-reactor.listenTCP(8880, factory)
+reactor.listenTCP(8888, factory)
 reactor.run()
