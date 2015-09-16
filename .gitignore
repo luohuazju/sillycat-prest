@@ -1,2 +1,2 @@
 .idea/
-twistd.log
+*.log
