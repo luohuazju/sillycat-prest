@@ -6,7 +6,7 @@ class BookResource(APIResource):
     def getBook(self, request, id):
         return 'Pick up one book with id %s' % id
 
-    @GET('^/book')
+    @GET('^/book/')
     def books(self,request):
         return "books"
 
