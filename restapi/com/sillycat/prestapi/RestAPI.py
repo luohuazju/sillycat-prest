@@ -6,7 +6,6 @@ from BookAPI import BookResource
 
 bookResource = BookResource()
 
-
 rootResource = Resource()
 rootResource.putChild("book", bookResource)
 
