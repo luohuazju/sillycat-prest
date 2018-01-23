@@ -11,12 +11,12 @@ class BookResource(APIResource):
         return "books"
 
     @PUT('^/book/(?P<id>[^/]+)')
-    def updateBook(self,request):
-        return "Update book with id %s" % id
+    def updateBook(self,request, id):
+        return "Update book with id %s" % request.content.read()
 
-    @POST('^/book/(?P<id>[^/]+)')
-    def saveBook(self, request, id):
-        return "Save book with id %s" % id
+    @POST('^/book/')
+    def saveBook(self, request):
+        return "Save book with id %s" % request.content.read()
 
     @DELETE('^/book/(?P<id>[^/]+)')
     def deleteBook(self,request,id):
